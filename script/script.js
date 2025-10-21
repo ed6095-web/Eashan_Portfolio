@@ -26,7 +26,7 @@ const phrases = [
   "AI Enthusiast & Developer",
   "Building the Future with Code",
   "Full-Stack Web Developer",
-  "Electronics & Robotics Explorer",
+  "An Explorer",
   "Turning Ideas into Reality"
 ];
 
@@ -440,3 +440,4 @@ document.querySelectorAll('a[href="#"]').forEach(link => {
 document.addEventListener('DOMContentLoaded', () => {
   window.scrollTo(0, 0);
 });
+
