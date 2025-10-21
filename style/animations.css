@@ -1,0 +1,545 @@
+/* ============= KEYFRAME ANIMATIONS ============= */
+
+/* Glow pulse effect */
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px var(--neon-cyan),
+                 0 0 20px var(--neon-cyan),
+                 0 0 30px var(--neon-blue);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--neon-cyan),
+                 0 0 40px var(--neon-cyan),
+                 0 0 60px var(--neon-blue),
+                 0 0 80px var(--neon-purple);
+  }
+}
+
+/* Typewriter cursor blink */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Rotating ring around profile */
+@keyframes rotate-ring {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulsing dot animation */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    box-shadow: 0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan),
+                0 0 60px var(--neon-blue);
+  }
+}
+
+/* Glitch effect for hero title */
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                -0.05em -0.025em 0 rgba(0, 255, 0, 0.75),
+                -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75),
+                0.025em 0.025em 0 rgba(0, 255, 0, 0.75),
+                -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                0.05em 0 0 rgba(0, 255, 0, 0.75),
+                0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75),
+                0.05em 0 0 rgba(0, 255, 0, 0.75),
+                0 -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75),
+                -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
+                -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Fade in up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in down */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Zoom in */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Border glow animation */
+@keyframes border-glow {
+  0%, 100% {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-cyan);
+  }
+  50% {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 20px var(--neon-blue),
+                0 0 40px var(--neon-cyan);
+  }
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Heartbeat */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+/* Spin */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Neon flicker */
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 0 0 10px var(--neon-cyan),
+                 0 0 20px var(--neon-cyan),
+                 0 0 30px var(--neon-blue);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* Wave animation */
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+}
+
+/* Scale pulse */
+@keyframes scale-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============= APPLIED ANIMATIONS ============= */
+
+/* Glitch effect on hero title */
+.glitch {
+  animation: glitch 5s infinite;
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch::before {
+  animation: glitch 2.5s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-0.025em, -0.0125em);
+}
+
+.glitch::after {
+  animation: glitch 3s infinite reverse;
+  clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+  transform: translate(0.0125em, 0.025em);
+}
+
+/* Navbar scroll effect */
+.navbar {
+  animation: fadeInDown 1s ease;
+}
+
+/* Hero elements animation */
+.hero-content h1 {
+  animation: fadeInDown 1s ease 0.2s both;
+}
+
+.typewriter-container {
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero-btns {
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+/* Profile image animations */
+.profile-img img {
+  animation: zoomIn 1s ease, float 4s ease-in-out infinite 1s;
+}
+
+/* Skill items stagger */
+.skill-item:nth-child(1) { animation-delay: 0.1s; }
+.skill-item:nth-child(2) { animation-delay: 0.2s; }
+.skill-item:nth-child(3) { animation-delay: 0.3s; }
+.skill-item:nth-child(4) { animation-delay: 0.4s; }
+.skill-item:nth-child(5) { animation-delay: 0.5s; }
+.skill-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Button hover animations */
+.neon-btn {
+  animation: scale-pulse 2s infinite;
+}
+
+.neon-btn:hover {
+  animation: none;
+}
+
+/* Section title animation */
+.section-title {
+  animation: fadeInDown 1s ease;
+}
+
+.section-title::after {
+  animation: shimmer 3s infinite;
+}
+
+/* Timeline animations handled by AOS */
+.timeline-item {
+  transition: all 0.4s ease;
+}
+
+/* Project card hover effects */
+.project-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Social icon animations */
+.social-icon {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Fact items entrance */
+.fact-item {
+  animation: slideInLeft 0.6s ease;
+}
+
+.fact-item:nth-child(1) { animation-delay: 0.1s; }
+.fact-item:nth-child(2) { animation-delay: 0.2s; }
+.fact-item:nth-child(3) { animation-delay: 0.3s; }
+
+/* Form input focus animation */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  animation: border-glow 2s infinite;
+}
+
+/* Scroll to top button */
+.scroll-top {
+  animation: bounce 2s infinite;
+}
+
+.scroll-top:hover {
+  animation: none;
+}
+
+/* Loading animation */
+@keyframes loading {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Star twinkle (for particles) */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Glow ring around elements */
+.glow-ring {
+  animation: rotate-ring 10s linear infinite, scale-pulse 3s infinite;
+}
+
+/* Timeline dot pulse */
+.timeline-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+/* Nav link active state */
+.nav-link.active {
+  color: var(--neon-cyan);
+  text-shadow: var(--glow-sm);
+}
+
+/* Hover glow effect for cards */
+.glass-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+  animation: border-glow 2s infinite;
+}
+
+/* ============= RESPONSIVE ANIMATIONS ============= */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .glitch::before,
+  .glitch::after {
+    display: none;
+  }
+  
+  .profile-img img {
+    animation: zoomIn 1s ease;
+  }
+  
+  .neon-btn {
+    animation: none;
+  }
+  
+  .scroll-top {
+    animation: none;
+  }
+}
+
+/* ============= ACCESSIBILITY - PREFERS REDUCED MOTION ============= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============= TRANSITION UTILITIES ============= */
+.transition-fast {
+  transition: all 0.2s ease;
+}
+
+.transition-normal {
+  transition: all 0.4s ease;
+}
+
+.transition-slow {
+  transition: all 0.8s ease;
+}
+
+.transition-bounce {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ============= ENTRANCE ANIMATIONS FOR AOS ============= */
+[data-aos="fade-up"] {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+[data-aos="fade-up"].aos-animate {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-aos="fade-down"] {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+[data-aos="fade-down"].aos-animate {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-aos="zoom-in"] {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+[data-aos="zoom-in"].aos-animate {
+  transform: scale(1);
+  opacity: 1;
+}
+
+[data-aos="fade-left"] {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+[data-aos="fade-left"].aos-animate {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+[data-aos="fade-right"] {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+[data-aos="fade-right"].aos-animate {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* ============= SPECIAL EFFECTS ============= */
+
+/* Neon text glow */
+.neon-text {
+  animation: glow-pulse 3s infinite;
+}
+
+/* Flicker effect */
+.flicker-text {
+  animation: flicker 5s infinite;
+}
+
+/* Floating elements */
+.float-element {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Rotating elements */
+.rotate-element {
+  animation: spin 20s linear infinite;
+}
+
+/* Pulsing elements */
+.pulse-element {
+  animation: scale-pulse 2s infinite;
+}
