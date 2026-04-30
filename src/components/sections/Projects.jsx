@@ -168,16 +168,17 @@ export default function Projects() {
         />
 
         <motion.div
-          className="absolute top-4 flex items-center"
-          style={{ gap: GAP, left: 0, right: 0 }}
+          className="absolute top-4 flex items-center cursor-grab active:cursor-grabbing"
+          style={{ gap: GAP, left: 0, right: 0, touchAction: 'pan-y' }}
           animate={{ x: getX(current) }}
           transition={{ type: 'spring', stiffness: 280, damping: 32 }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.12}
-          onDragEnd={(_, info) => {
-            if (info.velocity.x < -400 || info.offset.x < -(cardW * 0.3)) next();
-            else if (info.velocity.x > 400 || info.offset.x > cardW * 0.3) prev();
+          dragElastic={0.2}
+          onDragEnd={(e, info) => {
+            const swipeThreshold = 40;
+            if (info.offset.x < -swipeThreshold || info.velocity.x < -300) next();
+            else if (info.offset.x > swipeThreshold || info.velocity.x > 300) prev();
           }}
         >
           {projects.map((project, i) => (
