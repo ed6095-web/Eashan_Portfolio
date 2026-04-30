@@ -171,12 +171,13 @@ export default function Projects() {
           className="absolute top-4 flex items-center cursor-grab active:cursor-grabbing"
           style={{ gap: GAP, left: 0, right: 0, touchAction: 'pan-y' }}
           animate={{ x: getX(current) }}
-          transition={{ type: 'spring', stiffness: 280, damping: 32 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
+          dragElastic={0.1}
+          dragMomentum={false}
           onDragEnd={(e, info) => {
-            const swipeThreshold = 40;
+            const swipeThreshold = 30;
             if (info.offset.x < -swipeThreshold || info.velocity.x < -300) next();
             else if (info.offset.x > swipeThreshold || info.velocity.x > 300) prev();
           }}
