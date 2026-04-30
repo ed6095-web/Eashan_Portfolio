@@ -174,12 +174,12 @@ export default function Projects() {
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.1}
+          dragElastic={0.15}
           dragMomentum={false}
           onDragEnd={(e, info) => {
-            const swipeThreshold = 30;
-            if (info.offset.x < -swipeThreshold || info.velocity.x < -300) next();
-            else if (info.offset.x > swipeThreshold || info.velocity.x > 300) prev();
+            const swipeThreshold = 50;
+            if (info.offset.x < -swipeThreshold) next();
+            else if (info.offset.x > swipeThreshold) prev();
           }}
         >
           {projects.map((project, i) => (

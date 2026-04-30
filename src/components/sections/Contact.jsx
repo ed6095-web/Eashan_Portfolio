@@ -80,10 +80,29 @@ export default function Contact() {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setSending(true);
-    await new Promise(r => setTimeout(r, 1500));
+
+    try {
+      await fetch(`https://formsubmit.co/ajax/${personalInfo.email}`, {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            message: form.message,
+            _subject: `New Portfolio Message from ${form.name}`
+        })
+      });
+      setSent(true);
+      setForm({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message. Please try the direct email link instead.");
+    }
+
     setSending(false);
-    setSent(true);
-    setForm({ name: '', email: '', message: '' });
     setTimeout(() => setSent(false), 5000);
   };
 
