@@ -78,6 +78,36 @@ export default function Contact() {
 
 
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) return;
+    setSending(true);
+
+    try {
+      await fetch(`https://formsubmit.co/ajax/${personalInfo.email}`, {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            message: form.message,
+            _subject: `New Portfolio Message from ${form.name}`
+        })
+      });
+      setSent(true);
+      setForm({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message. Please try the direct email link instead.");
+    }
+
+    setSending(false);
+    setTimeout(() => setSent(false), 5000);
+  };
+
   return (
     <section id="contact" className="relative py-32 overflow-hidden">
       {/* BG */}
@@ -125,14 +155,10 @@ export default function Contact() {
               ) : (
                 <motion.form
                   key="form"
-                  action={`https://formsubmit.co/${personalInfo.email}`}
-                  method="POST"
-                  target="_blank"
+                  onSubmit={handleSubmit}
                   className="glass-card p-8 space-y-5"
                   exit={{ opacity: 0 }}
-                  onSubmit={() => setTimeout(() => { setSent(true); setForm({ name: '', email: '', message: '' }); setTimeout(() => setSent(false), 5000); }, 1000)}
                 >
-                  <input type="hidden" name="_captcha" value="false" />
                   <FloatingInput label="Your Name" name="name" value={form.name} onChange={handleChange} />
                   <FloatingInput label="Your Email" type="email" name="email" value={form.email} onChange={handleChange} />
                   <FloatingInput label="Your Message" name="message" value={form.message} onChange={handleChange} multiline />
