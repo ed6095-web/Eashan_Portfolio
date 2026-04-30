@@ -1,0 +1,245 @@
+// Portfolio data — all content in one place
+import {
+  Code2, Database, Globe, Music, Download, BookOpen,
+  Brain, Layers, Zap, Server, Cpu, GitBranch,
+  GraduationCap, Rocket, Trophy, Users, Lightbulb, Search
+} from 'lucide-react';
+
+export const personalInfo = {
+  name: "Eashan Darsh",
+  title: "AI Developer & Full-Stack Engineer",
+  university: "SRM University — B.Tech CSE (AI/ML), 2nd Year",
+  email: "eashandarsh77@gmail.com",
+  github: "https://github.com/ed6095-web",
+  linkedin: "https://www.linkedin.com/in/eashandarsh/",
+  instagram: "https://www.instagram.com/er.eashan_darsh/",
+  location: "India",
+  taglines: [
+    "I build intelligent systems.",
+    "I design scalable solutions.",
+    "I solve real problems.",
+    "I ship things that matter.",
+  ],
+  aboutLines: [
+    "2nd year CSE (AI/ML) student at SRM University.",
+    "I build AI-powered systems that solve real-world problems.",
+    "From neural traffic management to music streaming engines.",
+    "I prefer the terminal over the mouse.",
+    "const me = { focus: 'Logic & Utility', rule: 'Build. Break. Fix.' }",
+  ],
+  counters: [
+    { label: "Projects Built", value: 10, suffix: "+" },
+    { label: "Technologies", value: 15, suffix: "+" },
+    { label: "Hackathons", value: 10, suffix: "+" },
+  ],
+};
+
+export const projects = [
+  {
+    id: 1,
+    title: "Wavvy Blog",
+    tagline: "Social Media & Blog Platform",
+    category: "Web",
+    status: "completed",
+    image: "/projects/wavvy-blog.png",
+    description: "A full-featured social media and blog platform where users can create posts, follow others, and engage with content. Built with React and Firebase.",
+    problem: "No simple platform combining blog writing with social media interaction for everyday users.",
+    solution: "Full-stack platform with auth, real-time post feeds, user profiles, and media upload — deployed on Vercel.",
+    impact: "Live and actively used. Features post creation, user discovery, and real-time feed updates.",
+    tech: ["React", "Firebase", "Vercel", "JavaScript", "CSS"],
+    github: "https://github.com/ed6095-web/blog",
+    demo: "https://blog-theta-neon-87.vercel.app/",
+    featured: true,
+    color: "#8b5cf6",
+  },
+  {
+    id: 2,
+    title: "Library Management System",
+    tagline: "Full-Stack LMS with JDBC & SQL",
+    category: "Tools",
+    status: "completed",
+    image: "/projects/lms.png",
+    description: "Java-based Library Management System with SQL backend and JDBC connectivity. Handles book inventory, member management, issue and return tracking.",
+    problem: "Manual library management is error-prone and slow. No digital tracking of loans and fines.",
+    solution: "Full CRUD system with dashboard, active loan tracking, overdue alerts, and fine management.",
+    impact: "Complete working system with book browsing, loan management, and financial tracking.",
+    tech: ["Java", "JDBC", "SQL", "Swing", "React"],
+    github: "https://github.com/ed6095-web/Library-Management-System",
+    demo: "#",
+    featured: false,
+    color: "#00f5ff",
+  },
+  {
+    id: 3,
+    title: "Droporia",
+    tagline: "Advanced Multi-Platform Video Downloader",
+    category: "Web",
+    status: "completed",
+    image: "/projects/droporia.png",
+    description: "Advanced video downloader supporting YouTube, Instagram, TikTok, and Twitter. Supports MP4 and MP3 output with multiple quality options.",
+    problem: "No clean, reliable tool to download videos from multiple platforms in one place.",
+    solution: "Unified downloader UI v2.0 with platform detection, quality selector, and dark mode support.",
+    impact: "Supports 4 major platforms. Clean UI with download history tracking.",
+    tech: ["JavaScript", "HTML", "CSS", "Node.js", "yt-dlp"],
+    github: "https://github.com/ed6095-web/DROPORIA",
+    demo: "#",
+    featured: false,
+    color: "#39ff14",
+  },
+  {
+    id: 4,
+    title: "Cryptarithmetic Solver",
+    tagline: "Constraint Satisfaction Puzzle Engine",
+    category: "Tools",
+    status: "completed",
+    image: "/projects/cryptarithmetic.png",
+    description: "Interactive web-based cryptarithmetic puzzle solver. Input any symbolic math equation like SEND + MORE = MONEY and the engine solves it instantly using backtracking.",
+    problem: "Cryptarithmetic puzzles are complex and tedious to solve manually for educational use.",
+    solution: "Advanced backtracking engine with constraint propagation, step-by-step visualization, and dark UI.",
+    impact: "Educational tool with clean solve output, built with Next.js and Shadcn UI.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn UI"],
+    github: "https://github.com/ed6095-web/Cryptarithmetic",
+    demo: "#",
+    featured: false,
+    color: "#ff2d78",
+  },
+  {
+    id: 5,
+    title: "Wavvy Music",
+    tagline: "Full-Stack Music Streaming Platform",
+    category: "Web",
+    status: "completed",
+    image: "/projects/wavvy-music.png",
+    description: "Premium music streaming app with YouTube Music integration, background playback, MediaSession notification controls, and a native Android experience.",
+    problem: "No free, ad-free music app with background play and native Android controls.",
+    solution: "React + Node.js streaming engine using JioSaavn API. Featured playlists, trending, recently played.",
+    impact: "Full-featured mobile streaming with home, search, and library — packaged as Android WebView app.",
+    tech: ["React", "Node.js", "Vite", "JioSaavn API", "WebView"],
+    github: "https://github.com/ed6095-web/Wavvy-Music",
+    demo: "#",
+    featured: false,
+    color: "#f59e0b",
+  },
+];
+
+export const skills = {
+  languages: [
+    { name: "Python", level: 90 },
+    { name: "JavaScript", level: 85 },
+    { name: "TypeScript", level: 75 },
+    { name: "Java", level: 70 },
+    { name: "C / C++", level: 65 },
+  ],
+  tools: [
+    { name: "React", level: 88 },
+    { name: "Node.js", level: 82 },
+    { name: "Next.js", level: 78 },
+    { name: "Flask", level: 80 },
+    { name: "Docker", level: 65 },
+    { name: "Firebase", level: 72 },
+  ],
+  ai: [
+    { name: "YOLOv8", level: 82 },
+    { name: "OpenCV", level: 78 },
+    { name: "REST APIs", level: 90 },
+    { name: "WebSockets", level: 75 },
+    { name: "TensorFlow", level: 60 },
+  ],
+};
+
+export const journey = [
+  {
+    date: "Aug 2023",
+    title: "Joined SRM University",
+    subtitle: "B.Tech — CSE (AI/ML)",
+    description: "Started my engineering journey with a clear goal: build things that solve real problems.",
+    icon: "graduation",
+    side: "right",
+  },
+  {
+    date: "Early 2024",
+    title: "First Real Projects",
+    subtitle: "LMS, Droporia, Wavvy Blog",
+    description: "Built my first full-stack applications — Library Management System in Java, Droporia video downloader, and the Wavvy Blog social platform.",
+    icon: "code",
+    side: "left",
+  },
+  {
+    date: "Mid 2024",
+    title: "Hackathons & Workshops",
+    subtitle: "Competitive Building Begins",
+    description: "Competed in hackathons. Learned to build and pitch under pressure. Joined tech communities and R&D labs at SRM.",
+    icon: "zap",
+    side: "right",
+  },
+  {
+    date: "Late 2024",
+    title: "Leadership & Clubs",
+    subtitle: "PLACFV R&D | DAA Technical | SQAC Events",
+    description: "Joined leadership roles across 3 major college bodies. Leading tech initiatives and organizing events across domains.",
+    icon: "users",
+    side: "left",
+  },
+  {
+    date: "2025",
+    title: "AI Systems & Wavvy Music",
+    subtitle: "Real AI Applications",
+    description: "Built Wavvy Music streaming engine, saavn-backend API, and started the TRAFFIC.AI neural traffic management system.",
+    icon: "brain",
+    side: "right",
+  },
+  {
+    date: "2026",
+    title: "Guidewire DEVTrails",
+    subtitle: "KavachSathi Hackathon",
+    description: "Built KavachSathi — an AI income protection platform for gig workers — at Guidewire DEVTrails 2026.",
+    icon: "trophy",
+    side: "left",
+  },
+];
+
+export const currentlyBuilding = [
+  {
+    title: "TRAFFIC.AI v2",
+    description: "Upgrading neural traffic system with multi-intersection coordination and predictive signal optimization.",
+    tech: ["YOLOv8", "PyTorch", "FastAPI"],
+    status: "active",
+  },
+  {
+    title: "AI Portfolio Chatbot",
+    description: "Context-aware assistant trained on my projects, letting visitors explore my work conversationally.",
+    tech: ["LLM", "RAG", "React"],
+    status: "active",
+  },
+];
+
+export const wantToLearn = [
+  { name: "Rust", reason: "Systems programming, near-native performance", icon: "cpu" },
+  { name: "LLM Fine-tuning", reason: "Domain-specific AI model training", icon: "brain" },
+  { name: "Kubernetes", reason: "Production-grade container orchestration", icon: "server" },
+  { name: "WebAssembly", reason: "Near-native browser performance", icon: "zap" },
+  { name: "Three.js Advanced", reason: "Immersive 3D web experiences", icon: "globe" },
+];
+
+export const strengths = [
+  {
+    title: "Systems Thinker",
+    description: "I see the full architecture before writing a single line. I think in modules, data flows, and edge cases.",
+    icon: "layers",
+  },
+  {
+    title: "Fast Learner",
+    description: "I pick up new tools in days. From YOLOv8 to WebSockets to Guidewire APIs — context switching is a strength.",
+    icon: "zap",
+  },
+  {
+    title: "Build-First Mentality",
+    description: "I bias toward shipping. Ideas stay ideas until they run. I prototype fast, iterate fast.",
+    icon: "rocket",
+  },
+  {
+    title: "Debug Obsession",
+    description: "I find debugging satisfying. Every bug is a mystery. I don't stop until it's solved and documented.",
+    icon: "search",
+  },
+];
