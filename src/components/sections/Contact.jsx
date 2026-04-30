@@ -180,7 +180,7 @@ export default function Contact() {
                 <span className="text-sm text-text-secondary group-hover:text-text-primary">{personalInfo.email}</span>
               </a>
               <a
-                href={`https://wa.me/91XXXXXXXXXX`}
+                href="https://wa.me/+917739215902"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 p-3 rounded-xl hover:bg-[rgba(57,255,20,0.05)] transition-all group"
