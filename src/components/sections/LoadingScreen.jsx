@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
-import Spline from '@splinetool/react-spline';
 
 export default function LoadingScreen({ onComplete }) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -82,7 +81,7 @@ export default function LoadingScreen({ onComplete }) {
               className="text-[11px] font-mono tracking-[0.2em] uppercase"
               style={{ color: 'rgba(255,255,255,0.2)' }}
             >
-              Portfolio v2.0
+              SYSTEM ONLINE
             </span>
           </motion.div>
 
@@ -103,18 +102,19 @@ export default function LoadingScreen({ onComplete }) {
             >
               <div
                 style={{
-                  width: '140%',  /* oversized child */
-                  height: '140%', /* oversized child */
-                  flexShrink: 0,
+                  width: '100%',
+                  height: '100%',
                   position: 'relative'
                 }}
               >
-                <Spline
-                  scene="https://prod.spline.design/Q52-Gm6-Yxrm1EUp/scene.splinecode"
+                <img
+                  src="/hero.gif"
+                  alt="Hero Animation"
                   onLoad={() => setIframeLoaded(true)}
                   style={{
                     width: '100%',
                     height: '100%',
+                    objectFit: 'contain'
                   }}
                 />
               </div>
