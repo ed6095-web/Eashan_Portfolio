@@ -95,29 +95,33 @@ export default function LoadingScreen({ onComplete }) {
               className="relative"
               style={{ width: 'min(240px, 60vw)', height: 'min(240px, 60vw)', marginBottom: '-8px' }}
             >
+            {/* Outer crop container — clips the Spline watermark */}
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                borderRadius: '50%',
+                position: 'relative',
+              }}
+            >
               <iframe
                 src="https://my.spline.design/genkubgreetingrobot-cGfOs2mjmRDB944J84eIItar/"
                 frameBorder="0"
-                width="100%"
-                height="100%"
-                style={{ border: 'none', display: 'block', borderRadius: '50%' }}
-                onLoad={() => setIframeLoaded(true)}
                 title="Greeting Robot"
                 allow="autoplay"
-              />
-              {/* Hide "Built with Spline" watermark — solid cover */}
-              <div
                 style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: 180,
-                  height: 48,
-                  background: 'linear-gradient(160deg, #0a0a18 0%, #080810 50%, #060610 100%)',
-                  zIndex: 10,
-                  borderRadius: '0 0 50% 0',
+                  border: 'none',
+                  display: 'block',
+                  /* Scale up 30% and center — watermark in bottom-right gets cropped off */
+                  width: '130%',
+                  height: '130%',
+                  marginLeft: '-15%',
+                  marginTop: '-15%',
                 }}
+                onLoad={() => setIframeLoaded(true)}
               />
+            </div>
               {/* Soft ambient glow under robot */}
               <div
                 className="absolute -bottom-4 left-1/2 -translate-x-1/2 pointer-events-none"
