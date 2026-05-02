@@ -100,6 +100,10 @@ export default function LoadingScreen({ onComplete }) {
                 width: '100%',
                 height: '100%',
                 position: 'relative',
+                overflow: 'hidden', /* ensure scaled iframe content gets clipped */
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
               <iframe
@@ -113,18 +117,10 @@ export default function LoadingScreen({ onComplete }) {
                   display: 'block',
                   width: '100%',
                   height: '100%',
+                  transform: 'scale(1.18)', /* Scale up by 18% to push badge off screen */
+                  transformOrigin: 'center center',
                 }}
               />
-              {/* Solid overlay to perfectly hide the Spline badge pill */}
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                width: 140,
-                height: 50,
-                background: 'linear-gradient(160deg, #0a0a18, #080810)',
-                zIndex: 50
-              }} />
             </div>
               {/* Soft ambient glow under robot */}
               <div
