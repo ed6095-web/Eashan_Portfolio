@@ -1,122 +1,215 @@
-import { useEffect, useState } from 'react';
+import { useRef, Suspense, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial, Float, Stars } from '@react-three/drei';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { ArrowRight, Download, Zap } from 'lucide-react';
+import * as THREE from 'three';
+import { ArrowRight, Download } from 'lucide-react';
+
+// Neural network mesh
+function NeuralNetwork() {
+  const groupRef = useRef();
+
+  const nodePositions = [
+    [0, 0, 0],
+    [1.5, 0.8, 0.3], [-1.5, 0.8, 0.3],
+    [1.2, -0.9, 0.5], [-1.2, -0.9, 0.5],
+    [0.4, 1.8, -0.4], [-0.4, 1.8, -0.4],
+    [0, -1.8, -0.2],
+    [2.2, 0, -0.5], [-2.2, 0, -0.5],
+    [0.8, 0.4, 1.5], [-0.8, 0.4, 1.5],
+  ];
+
+  const connPairs = [
+    [0,1],[0,2],[0,3],[0,4],[1,5],[2,6],[3,7],[4,7],
+    [1,8],[2,9],[5,10],[6,11],[8,10],[9,11],[0,10],[0,11],
+  ];
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.12;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.08) * 0.08;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {nodePositions.map((pos, i) => (
+        <mesh key={i} position={pos}>
+          <sphereGeometry args={[0.07, 12, 12]} />
+          <meshStandardMaterial
+            color={i === 0 ? '#a78bfa' : i % 2 === 0 ? '#7c3aed' : '#6366f1'}
+            emissive={i === 0 ? '#7c3aed' : '#4f46e5'}
+            emissiveIntensity={0.4}
+            roughness={0.15}
+            metalness={0.8}
+          />
+        </mesh>
+      ))}
+
+      {connPairs.map(([a, b], i) => (
+        <line key={i}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              count={2}
+              array={new Float32Array([...nodePositions[a], ...nodePositions[b]])}
+              itemSize={3}
+            />
+          </bufferGeometry>
+          <lineBasicMaterial color="#7c3aed" opacity={0.12} transparent />
+        </line>
+      ))}
+
+      <Sphere args={[0.32, 32, 32]} position={[0, 0, 0]}>
+        <MeshDistortMaterial
+          color="#7c3aed"
+          emissive="#6d28d9"
+          emissiveIntensity={0.2}
+          roughness={0.1}
+          metalness={0.9}
+          distort={0.25}
+          speed={1.5}
+          transparent
+          opacity={0.65}
+        />
+      </Sphere>
+    </group>
+  );
+}
+
+function ParticleRing() {
+  const ref = useRef();
+  const count = 60;
+  const positions = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i++) {
+    const angle = (i / count) * Math.PI * 2;
+    const radius = 3 + Math.random() * 0.4;
+    positions[i * 3] = Math.cos(angle) * radius;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 0.8;
+    positions[i * 3 + 2] = Math.sin(angle) * radius;
+  }
+
+  useFrame((state) => {
+    if (ref.current) ref.current.rotation.y = state.clock.elapsedTime * 0.06;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial color="#8b5cf6" size={0.035} transparent opacity={0.5} />
+    </points>
+  );
+}
+
+function CameraController() {
+  const { camera } = useThree();
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e) => {
+      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouse.current.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
+
+  useFrame(() => {
+    camera.position.x += (mouse.current.x * 0.7 - camera.position.x) * 0.04;
+    camera.position.y += (mouse.current.y * 0.4 - camera.position.y) * 0.04;
+    camera.lookAt(0, 0, 0);
+  });
+
+  return null;
+}
 
 export default function Hero() {
-  const [loaded, setLoaded] = useState(false);
   const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
-
-      {/* ── Spline 3D Robot — fullscreen background ───────────────────── */}
-      <div className="absolute inset-0 z-0">
-        <iframe
-          src="https://my.spline.design/genkubgreetingrobot-cGfOs2mjmRDB944J84eIItar/"
-          frameBorder="0"
-          width="100%"
-          height="100%"
-          style={{ border: 'none', display: 'block', width: '100%', height: '100%' }}
-          onLoad={() => setLoaded(true)}
-          title="3D Greeting Robot"
-          allow="autoplay"
-        />
+      {/* 3D Canvas */}
+      <div className="absolute inset-0">
+        <Canvas
+          camera={{ position: [0, 0, 6], fov: 50 }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: 'transparent' }}
+        >
+          <ambientLight intensity={0.25} />
+          <pointLight position={[4, 4, 4]} intensity={1.2} color="#8b5cf6" />
+          <pointLight position={[-4, -4, -4]} intensity={0.4} color="#6366f1" />
+          <Stars radius={100} depth={50} count={1500} factor={2.5} saturation={0} fade speed={0.3} />
+          <Suspense fallback={null}>
+            <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.4}>
+              <NeuralNetwork />
+            </Float>
+            <ParticleRing />
+          </Suspense>
+          <CameraController />
+        </Canvas>
       </div>
 
-      {/* ── Atmospheric overlays ────────────────────────────────────────── */}
-      {/* Left dark vignette so text is always readable */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background: `
-            linear-gradient(to right,  rgba(8,8,16,0.92) 0%, rgba(8,8,16,0.65) 45%, rgba(8,8,16,0.05) 100%),
-            linear-gradient(to top,    rgba(8,8,16,0.95) 0%, transparent 35%),
-            linear-gradient(to bottom, rgba(8,8,16,0.55) 0%, transparent 20%)
-          `
-        }}
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, rgba(8,8,16,0.55) 70%)' }}
+      />
+      <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+        style={{ background: 'linear-gradient(to top, #080810, transparent)' }}
       />
 
-      {/* Purple accent glow behind text */}
-      <div
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none z-10"
-        style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, transparent 65%)' }}
-      />
-
-      {/* Bottom fade to next section */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to top, #080810 0%, transparent 100%)' }}
-      />
-
-      {/* ── Main Content — left-aligned for cinematic feel ───────────────── */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 lg:px-16 flex flex-col items-start justify-center min-h-screen pb-20 pt-28">
-
+      {/* Content */}
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
         {/* Status badge */}
         <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8"
-          style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)' }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-10"
+          style={{
+            background: 'rgba(139,92,246,0.08)',
+            border: '1px solid rgba(139,92,246,0.2)',
+          }}
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-mono text-purple-300/75 tracking-[0.2em] uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-xs font-mono text-purple-300/70 tracking-wider">
             Available for opportunities
           </span>
-          <Zap size={11} className="text-purple-400/60" />
         </motion.div>
 
-        {/* Kicker line */}
-        <motion.p
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.45, duration: 0.6 }}
-          className="text-sm font-mono tracking-[0.35em] uppercase mb-4"
-          style={{ color: '#00f5ff', textShadow: '0 0 20px rgba(0,245,255,0.4)' }}
-        >
-          AI Developer &amp; Full-Stack Engineer
-        </motion.p>
-
-        {/* Big name — RGB glitch */}
-        <motion.h1
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="font-orbitron font-black leading-none select-none mb-3"
-          style={{ fontSize: 'clamp(2.8rem, 8vw, 9rem)' }}
-        >
-          <span
-            className="glitch-text"
-            data-text="EASHAN"
-            style={{ color: '#ffffff', display: 'block', letterSpacing: '-0.02em' }}
-          >
-            EASHAN
-          </span>
-          <span
-            className="glitch-text"
-            data-text="DARSH"
-            style={{
-              color: '#ffffff',
-              display: 'block',
-              letterSpacing: '-0.02em',
-              marginTop: '-0.08em',
-              background: 'linear-gradient(135deg, #c4b5fd 0%, #7c3aed 50%, #00f5ff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            DARSH
-          </span>
-        </motion.h1>
-
-        {/* Typing subtitle */}
+        {/* Name with RGB-split glitch effect */}
         <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.9 }}
-          className="h-8 mb-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+          className="mb-8"
+        >
+          <h1 className="font-orbitron font-black tracking-tight leading-none select-none text-center">
+            <span
+              className="glitch-text"
+              data-text="EASHAN DARSH"
+              style={{
+                color: '#ffffff',
+                fontSize: 'clamp(2.2rem, 7vw, 8rem)',
+                display: 'inline-block',
+                letterSpacing: '-0.02em',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              EASHAN&nbsp;DARSH
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Typing line */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="h-10 mb-12"
         >
           <TypeAnimation
             sequence={[
@@ -127,42 +220,22 @@ export default function Hero() {
             ]}
             wrapper="span"
             repeat={Infinity}
-            className="text-base md:text-lg font-mono"
-            style={{ color: 'rgba(255,255,255,0.35)' }}
+            className="text-lg md:text-xl font-mono text-white/40"
           />
-        </motion.div>
-
-        {/* Tagline card */}
-        <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.05 }}
-          className="mb-12 max-w-md"
-        >
-          <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            2nd year <span style={{ color: '#a78bfa' }}>CSE (AI/ML)</span> student at SRM University,
-            building AI-powered systems that <span style={{ color: '#00f5ff' }}>solve real-world problems</span> —
-            from neural traffic management to music streaming engines.
-          </p>
         </motion.div>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
-          className="flex flex-wrap items-center gap-4"
+          transition={{ delay: 0.8 }}
+          className="flex flex-wrap items-center justify-center gap-4"
         >
           <motion.button
             onClick={() => scrollTo('#projects')}
-            className="btn-primary px-8 py-4 text-sm"
-            whileHover={{ scale: 1.05 }}
+            className="btn-primary px-8 py-3.5"
+            whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
-            style={{
-              background: 'rgba(124,58,237,0.2)',
-              border: '1px solid rgba(139,92,246,0.5)',
-              boxShadow: '0 0 30px rgba(124,58,237,0.2)',
-            }}
           >
             View Projects
             <ArrowRight size={15} />
@@ -171,31 +244,13 @@ export default function Hero() {
           <motion.a
             href="/resume.pdf"
             download
-            className="btn-secondary px-8 py-4 text-sm"
-            whileHover={{ scale: 1.05 }}
+            className="btn-secondary px-8 py-3.5"
+            whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
           >
             <Download size={15} />
             Download Resume
           </motion.a>
-        </motion.div>
-
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] font-mono tracking-[0.3em] uppercase" style={{ color: 'rgba(255,255,255,0.2)' }}>
-            scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-px h-10"
-            style={{ background: 'linear-gradient(to bottom, rgba(139,92,246,0.6), transparent)' }}
-          />
         </motion.div>
       </div>
     </section>
