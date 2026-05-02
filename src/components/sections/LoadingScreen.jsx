@@ -105,10 +105,18 @@ export default function LoadingScreen({ onComplete }) {
                 title="Greeting Robot"
                 allow="autoplay"
               />
-              {/* Hide Spline watermark */}
+              {/* Hide "Built with Spline" watermark — solid cover */}
               <div
-                className="absolute bottom-0 right-0"
-                style={{ width: 130, height: 36, background: 'transparent' }}
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  right: 0,
+                  width: 180,
+                  height: 48,
+                  background: 'linear-gradient(160deg, #0a0a18 0%, #080810 50%, #060610 100%)',
+                  zIndex: 10,
+                  borderRadius: '0 0 50% 0',
+                }}
               />
               {/* Soft ambient glow under robot */}
               <div
