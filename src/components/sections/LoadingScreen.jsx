@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Macbook } from './../ui/animated-3d-mac-book-air';
 
 export default function LoadingScreen({ onComplete }) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -8,6 +9,11 @@ export default function LoadingScreen({ onComplete }) {
   const [hoveringName, setHoveringName] = useState(false);
   const containerRef = useRef(null);
   const glowRef = useRef(null);
+
+  // Automatically mark loaded since Macbook is CSS
+  useEffect(() => {
+    setIframeLoaded(true);
+  }, []);
 
   // Cursor-based ambient glow
   useEffect(() => {
@@ -88,43 +94,29 @@ export default function LoadingScreen({ onComplete }) {
           {/* ── MIDDLE: Robot + Name + Subtitle ─────────────────── */}
           <div className="relative z-10 flex flex-col items-center flex-1 justify-center w-full px-6" style={{ gap: 0 }}>
 
-            {/* Robot Spline Native Component */}
+            {/* 3D Macbook Component */}
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative flex items-center justify-center overflow-hidden"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative flex items-center justify-center"
               style={{ 
                 width: 'min(240px, 60vw)', 
                 height: 'min(240px, 60vw)', 
-                marginBottom: '-8px',
-                borderRadius: '50%'
+                marginBottom: '1rem',
               }}
             >
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  position: 'relative'
-                }}
-              >
-                <img
-                  src="/hero.gif"
-                  alt="Hero Animation"
-                  onLoad={() => setIframeLoaded(true)}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain'
-                  }}
-                />
+              {/* Scaled wrapper to make it fit nicely */}
+              <div style={{ transform: 'scale(1.4) translateY(20px)' }}>
+                <Macbook />
               </div>
-              {/* Soft ambient glow under robot */}
+              
+              {/* Soft ambient glow under macbook */}
               <div
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 pointer-events-none"
+                className="absolute -bottom-10 left-1/2 -translate-x-1/2 pointer-events-none"
                 style={{
-                  width: '70%', height: 40,
-                  background: 'radial-gradient(ellipse, rgba(124,58,237,0.25) 0%, transparent 70%)',
-                  filter: 'blur(8px)',
+                  width: '90%', height: 50,
+                  background: 'radial-gradient(ellipse, rgba(124,58,237,0.3) 0%, transparent 70%)',
+                  filter: 'blur(12px)',
                 }}
               />
             </motion.div>
