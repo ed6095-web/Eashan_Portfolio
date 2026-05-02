@@ -118,27 +118,46 @@ function FlipCard({ project, active, cardW }) {
 // ─── Main ──────────────────────────────────────────────────────────────────────
 export default function Projects() {
   const [current, setCurrent] = useState(0);
-  const trackRef = useRef(null);
   const [cardW, setCardW] = useState(620);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setCardW(window.innerWidth < 768 ? window.innerWidth * 0.85 : 620);
+      const w = window.innerWidth;
+      setIsMobile(w < 768);
+      setCardW(w < 768 ? w * 0.85 : 620);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const goTo = (i) => setCurrent(Math.max(0, Math.min(i, projects.length - 1)));
-  const prev = () => goTo(current - 1);
-  const next = () => goTo(current + 1);
+  const next = () => setCurrent(prev => (prev + 1) % projects.length);
+  const prev = () => setCurrent(prev => (prev - 1 + projects.length) % projects.length);
+  const goTo = (i) => setCurrent(i);
 
-  // Center offset calculation
-  const getX = (idx) => {
-    if (!trackRef.current) return 0;
-    const containerW = trackRef.current.offsetWidth;
-    return containerW / 2 - (idx * (cardW + GAP)) - cardW / 2;
+  const getPosition = (index, currentIndex, total) => {
+    const diff = (index - currentIndex + total) % total;
+    if (diff === 0) return 'front';
+    if (diff === 1) return 'middle';
+    if (diff === 2) return 'back';
+    return 'hidden';
+  };
+
+  const getStackStyles = (pos) => {
+    // Offset values adjusted for mobile vs desktop
+    const offset = isMobile ? 20 : 40;
+    
+    switch (pos) {
+      case 'front': 
+        return { zIndex: 3, x: 0, scale: 1, rotate: 0, opacity: 1 };
+      case 'middle': 
+        return { zIndex: 2, x: offset, scale: 0.95, rotate: 4, opacity: 0.4 };
+      case 'back': 
+        return { zIndex: 1, x: offset * 2, scale: 0.9, rotate: 8, opacity: 0.15 };
+      default: 
+        return { zIndex: 0, x: offset * 3, scale: 0.85, rotate: 12, opacity: 0 };
+    }
   };
 
   return (
@@ -146,7 +165,7 @@ export default function Projects() {
       <div className="section-container">
         {/* Title */}
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-12 md:mb-20"
         >
           <p className="eyebrow mb-3">What I've Built</p>
           <h2 className="section-title flex items-center justify-center gap-4 flex-wrap">
@@ -157,44 +176,51 @@ export default function Projects() {
         </motion.div>
       </div>
 
-      {/* Carousel track */}
-      <div ref={trackRef} className="relative w-full overflow-hidden" style={{ height: 480 }}>
-        {/* Left/right fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #080810, transparent)' }}
-        />
-        <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #080810, transparent)' }}
-        />
+      {/* Stacked Carousel Container */}
+      <div className="relative w-full overflow-hidden flex items-center justify-center" style={{ height: 480 }}>
+        <div className="relative" style={{ width: cardW, height: 440 }}>
+          <AnimatePresence>
+            {projects.map((project, i) => {
+              const pos = getPosition(i, current, projects.length);
+              const styles = getStackStyles(pos);
+              const isFront = pos === 'front';
 
-        <motion.div
-          className="absolute top-4 flex items-center"
-          style={{ gap: GAP, left: 0, right: 0 }}
-          animate={{ x: getX(current) }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        >
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.id}
-              animate={{
-                scale: i === current ? 1 : 0.85,
-                opacity: i === current ? 1 : 0.35,
-              }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-            >
-              <FlipCard project={project} active={i === current} cardW={cardW} />
-            </motion.div>
-          ))}
-        </motion.div>
+              return (
+                <motion.div
+                  key={project.id}
+                  className={`absolute top-0 left-0 flex items-center justify-center ${isFront ? 'cursor-grab active:cursor-grabbing' : 'pointer-events-none'}`}
+                  style={{ width: '100%', height: '100%', zIndex: styles.zIndex }}
+                  initial={false}
+                  animate={{
+                    x: styles.x,
+                    scale: styles.scale,
+                    rotate: styles.rotate,
+                    opacity: styles.opacity,
+                  }}
+                  transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
+                  drag={isFront ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(e, info) => {
+                    if (info.offset.x < -80) next();
+                    else if (info.offset.x > 80) prev();
+                  }}
+                >
+                  <FlipCard project={project} active={isFront} cardW={cardW} />
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Controls */}
-      <div className="flex items-center justify-center gap-6 mt-2">
+      <div className="flex items-center justify-center gap-6 mt-12 md:mt-16">
         {/* Prev arrow */}
         <motion.button
-          onClick={prev} disabled={current === 0}
+          onClick={prev}
           whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-          className="w-10 h-10 rounded-full flex items-center justify-center transition-all disabled:opacity-20"
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
           style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)' }}
         >
           <ChevronLeft size={18} className="text-purple-400" />
@@ -220,9 +246,9 @@ export default function Projects() {
 
         {/* Next arrow */}
         <motion.button
-          onClick={next} disabled={current === projects.length - 1}
+          onClick={next}
           whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
-          className="w-10 h-10 rounded-full flex items-center justify-center transition-all disabled:opacity-20"
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
           style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.2)' }}
         >
           <ChevronRight size={18} className="text-purple-400" />
