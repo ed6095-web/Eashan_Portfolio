@@ -89,29 +89,35 @@ export default function LoadingScreen({ onComplete }) {
           {/* ── MIDDLE: Robot + Name + Subtitle ─────────────────── */}
           <div className="relative z-10 flex flex-col items-center flex-1 justify-center w-full px-6" style={{ gap: 0 }}>
 
-            {/* Robot iframe — reduced size, floating */}
+            {/* Robot Spline Native Component */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative"
-              style={{ width: 'min(240px, 60vw)', height: 'min(240px, 60vw)', marginBottom: '-8px' }}
-            >
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                position: 'relative',
+              className="relative flex items-center justify-center overflow-hidden"
+              style={{ 
+                width: 'min(240px, 60vw)', 
+                height: 'min(240px, 60vw)', 
+                marginBottom: '-8px',
+                borderRadius: '50%'
               }}
             >
-              <Spline
-                scene="https://prod.spline.design/Q52-Gm6-Yxrm1EUp/scene.splinecode"
-                onLoad={() => setIframeLoaded(true)}
+              <div
                 style={{
-                  width: '100%',
-                  height: '100%',
+                  width: '140%',  /* oversized child */
+                  height: '140%', /* oversized child */
+                  flexShrink: 0,
+                  position: 'relative'
                 }}
-              />
-            </div>
+              >
+                <Spline
+                  scene="https://prod.spline.design/Q52-Gm6-Yxrm1EUp/scene.splinecode"
+                  onLoad={() => setIframeLoaded(true)}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              </div>
               {/* Soft ambient glow under robot */}
               <div
                 className="absolute -bottom-4 left-1/2 -translate-x-1/2 pointer-events-none"
