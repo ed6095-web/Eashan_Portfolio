@@ -95,13 +95,10 @@ export default function LoadingScreen({ onComplete }) {
               className="relative"
               style={{ width: 'min(240px, 60vw)', height: 'min(240px, 60vw)', marginBottom: '-8px' }}
             >
-            {/* Outer crop container — clips the Spline watermark */}
             <div
               style={{
                 width: '100%',
                 height: '100%',
-                overflow: 'hidden',
-                borderRadius: '50%',
                 position: 'relative',
               }}
             >
@@ -110,17 +107,24 @@ export default function LoadingScreen({ onComplete }) {
                 frameBorder="0"
                 title="Greeting Robot"
                 allow="autoplay"
+                onLoad={() => setIframeLoaded(true)}
                 style={{
                   border: 'none',
                   display: 'block',
-                  /* Scale up 30% and center — watermark in bottom-right gets cropped off */
-                  width: '130%',
-                  height: '130%',
-                  marginLeft: '-15%',
-                  marginTop: '-15%',
+                  width: '100%',
+                  height: '100%',
                 }}
-                onLoad={() => setIframeLoaded(true)}
               />
+              {/* Solid overlay to perfectly hide the Spline badge pill */}
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                width: 140,
+                height: 50,
+                background: 'linear-gradient(160deg, #0a0a18, #080810)',
+                zIndex: 50
+              }} />
             </div>
               {/* Soft ambient glow under robot */}
               <div
