@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import Spline from '@splinetool/react-spline';
 
 export default function LoadingScreen({ onComplete }) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -100,25 +101,14 @@ export default function LoadingScreen({ onComplete }) {
                 width: '100%',
                 height: '100%',
                 position: 'relative',
-                overflow: 'hidden', /* ensure scaled iframe content gets clipped */
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
               }}
             >
-              <iframe
-                src="https://my.spline.design/genkubgreetingrobot-cGfOs2mjmRDB944J84eIItar/"
-                frameBorder="0"
-                title="Greeting Robot"
-                allow="autoplay"
+              <Spline
+                scene="https://prod.spline.design/Q52-Gm6-Yxrm1EUp/scene.splinecode"
                 onLoad={() => setIframeLoaded(true)}
                 style={{
-                  border: 'none',
-                  display: 'block',
                   width: '100%',
                   height: '100%',
-                  transform: 'scale(1.18)', /* Scale up by 18% to push badge off screen */
-                  transformOrigin: 'center center',
                 }}
               />
             </div>

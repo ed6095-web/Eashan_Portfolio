@@ -143,6 +143,13 @@
     @apply text-xs font-mono tracking-[0.25em] uppercase;
     color: rgba(167, 139, 250, 0.7);
   }
+
+  /* Hide Spline Logo */
+  a[href*="spline.design"] {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 @layer utilities {
