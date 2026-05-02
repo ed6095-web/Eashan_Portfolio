@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #333; margin: 100px; }
+  .macbook-container {
+    perspective: 1000px;
+    width: 150px; height: 96px;
+    position: relative;
+    margin: 0 auto;
+  }
+  .macbook-inner {
+    transform-style: preserve-3d;
+    width: 100%; height: 100%;
+    transform: rotateX(-20deg) rotateY(-30deg); /* Tilt to see */
+  }
+  .macbook-screen {
+    position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,0,0,0.5);
+    transform-origin: center bottom;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg); /* 0 is vertical */
+  }
+  .macbook-body {
+    position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,255,0,0.5);
+    transform-origin: center bottom;
+    transform-style: preserve-3d;
+    transform: rotateX(-90deg); /* Lies flat towards user */
+  }
+  .face-plus {
+    position: absolute; inset: 0; background: blue; transform: translateZ(2px);
+    display: flex; align-items: center; justify-content: center; color: white;
+  }
+  .face-minus {
+    position: absolute; inset: 0; background: orange; transform: translateZ(-2px);
+    display: flex; align-items: center; justify-content: center; color: white;
+  }
+</style>
+</head>
+<body>
+  <div class="macbook-container">
+    <div class="macbook-inner">
+      <div class="macbook-screen">
+        <div class="face-plus">+Z Screen (Display)</div>
+        <div class="face-minus">-Z Screen (Back)</div>
+      </div>
+      <div class="macbook-body">
+        <div class="face-plus">+Z Body (Keyboard)</div>
+        <div class="face-minus">-Z Body (Bottom)</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

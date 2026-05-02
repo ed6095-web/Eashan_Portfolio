@@ -103,10 +103,11 @@ export default function LoadingScreen({ onComplete }) {
                 width: 'min(240px, 60vw)', 
                 height: 'min(240px, 60vw)', 
                 marginBottom: '1rem',
+                transformStyle: 'preserve-3d'
               }}
             >
               {/* Scaled wrapper to make it fit nicely */}
-              <div style={{ transform: 'scale(1.4) translateY(20px)' }}>
+              <div style={{ transform: 'scale(1.4) translateY(20px)', transformStyle: 'preserve-3d' }}>
                 <Macbook />
               </div>
               

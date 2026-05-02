@@ -524,7 +524,7 @@ input:-webkit-autofill:active {
 }
 
 .macbook-body {
-  transform-origin: 50% 0;
+  transform-origin: 50% 100%;
   transform: rotateX(-90deg);
 }
 
